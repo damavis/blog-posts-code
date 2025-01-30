@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, Response
 from prometheus_client import Counter, generate_latest, REGISTRY
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ def home():
 
 @app.route('/metrics')
 def metrics():
-    return generate_latest(REGISTRY)
+    return Response(generate_latest(REGISTRY), mimetype='text/plain; version=0.0.4; charset=utf-8')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
